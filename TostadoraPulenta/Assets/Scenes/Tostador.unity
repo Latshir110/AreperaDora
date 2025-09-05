@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2673261404097310120, guid: 78c5a68c7496de74ebe261cea430c652, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c220c6a68997ba3499589309801b2066, type: 2}
     - target: {fileID: 4894130122169281835, guid: 78c5a68c7496de74ebe261cea430c652, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.4
@@ -451,8 +455,8 @@ Transform:
   m_GameObject: {fileID: 404822289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.469, y: 0.24, z: -0.89365}
-  m_LocalScale: {x: 20.9402, y: 0.17739452, z: 19.455}
+  m_LocalPosition: {x: -0.469, y: 0, z: -0.89365}
+  m_LocalScale: {x: 30, y: 0.17739452, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -483,6 +487,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  shootSound: {fileID: 8300000, guid: 23273ea3ab42d5d428e3acbd77787d64, type: 3}
+  jumpSound: {fileID: 8300000, guid: 2151bfbe7fa5d3c4594ff61ed0941074, type: 3}
 --- !u!4 &523326958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4894130122169281835, guid: 78c5a68c7496de74ebe261cea430c652, type: 3}
@@ -542,13 +548,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650364171}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10099737, y: -0.076484926, z: 0.0077877664, w: 0.9919117}
-  m_LocalPosition: {x: 0.77, y: 1.52, z: -2.94}
+  m_LocalRotation: {x: 0.101299375, y: 0, z: 0, w: 0.99485606}
+  m_LocalPosition: {x: 0, y: 1.991, z: -2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 523326958}
-  m_LocalEulerAnglesHint: {x: 11.628, y: -8.819, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.628, y: 0, z: 0}
 --- !u!114 &650364173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,6 +1384,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 1964158485}
   cameraOffset: {x: 0, y: 5, z: -7}
   projectilePrefab: {fileID: 634979365082962996, guid: cee1404bafb051f4c82ce1096f5bc73a, type: 3}
+  shootSound: {fileID: 8300000, guid: 23273ea3ab42d5d428e3acbd77787d64, type: 3}
+  jumpSound: {fileID: 8300000, guid: 2151bfbe7fa5d3c4594ff61ed0941074, type: 3}
 --- !u!1001 &1949115936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,6 +1402,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2673261404097310120, guid: 78c5a68c7496de74ebe261cea430c652, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f16b784ee3a01e946a304b4011ce9783, type: 2}
     - target: {fileID: 4894130122169281835, guid: 78c5a68c7496de74ebe261cea430c652, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.61
@@ -1578,13 +1590,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964158481}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.18297124, y: 0.47302866, z: -0.10112418, w: -0.8558851}
-  m_LocalPosition: {x: 2.29, y: 1.82, z: -0.72}
+  m_LocalRotation: {x: 0.20905538, y: 0, z: 0, w: 0.97790384}
+  m_LocalPosition: {x: 0, y: 2.671, z: -3.147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1883431610}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.134, y: 0, z: 0}
 --- !u!1 &2018189957
 GameObject:
   m_ObjectHideFlags: 0

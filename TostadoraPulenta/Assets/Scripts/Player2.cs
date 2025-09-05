@@ -29,8 +29,14 @@ public class PlayerController2 : MonoBehaviour
     // Projectile
     public GameObject projectilePrefab;
 
+    //Audio/SFX
+    private AudioSource audioSource;
+    public AudioClip shootSound;
+    public AudioClip jumpSound;
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -65,7 +71,13 @@ public class PlayerController2 : MonoBehaviour
 
         // Disparo con RightControl
         if (Input.GetKeyDown(KeyCode.RightControl))
+        {
             Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+            //Efecto de sonido
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(shootSound);
+        }
+            
 
         // Actualiza cámara fija
         if (cameraTransform)
@@ -83,27 +95,31 @@ public class PlayerController2 : MonoBehaviour
         Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
         Vector3 targetVelocity = movement * MoveSpeed;
 
-        Vector3 velocity = rb.velocity;
+        Vector3 velocity = rb.linearVelocity;
         velocity.x = targetVelocity.x;
         velocity.z = targetVelocity.z;
-        rb.velocity = velocity;
+        rb.linearVelocity = velocity;
 
         if (isGrounded && moveHorizontal == 0 && moveForward == 0)
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
     }
 
     void Jump()
     {
         isGrounded = false;
         groundCheckTimer = groundCheckDelay;
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+
+        //Jump SFX
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(jumpSound);
     }
 
     void ApplyJumpPhysics()
     {
-        if (rb.velocity.y < 0)
-            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
-        else if (rb.velocity.y > 0)
-            rb.velocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
+        if (rb.linearVelocity.y < 0)
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
+        else if (rb.linearVelocity.y > 0)
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
     }
 }

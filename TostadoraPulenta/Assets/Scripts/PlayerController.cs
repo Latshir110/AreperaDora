@@ -30,12 +30,16 @@ public class PlayerController : MonoBehaviour
     private float raycastDistance;
     private Camera _camera;
 
+    //Audio/SFX
+    private AudioSource audioSource;
+    public AudioClip shootSound;
+    public AudioClip jumpSound;
 
 
 
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
@@ -78,6 +82,10 @@ public class PlayerController : MonoBehaviour
           if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+
+            //Efecto de sonido
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(shootSound);
         }
 
     }
@@ -123,6 +131,10 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         groundCheckTimer = groundCheckDelay;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z); // Initial burst for the jump
+
+        //Jump SFX
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(jumpSound);
     }
 
     void ApplyJumpPhysics()
