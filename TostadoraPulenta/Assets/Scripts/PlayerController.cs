@@ -1,15 +1,16 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
 
-public class PlayerController : NetworkBehaviour
+
+public class PlayerController : MonoBehaviour
 {
       // Camera Rotation
     public float mouseSensitivity = 2f;
     private float verticalRotation = 0f;
     private Transform cameraTransform;
+        public GameObject projectilePrefab;
     
     // Ground Movement
     private Rigidbody rb;
@@ -28,10 +29,10 @@ public class PlayerController : NetworkBehaviour
     private float playerHeight;
     private float raycastDistance;
     private Camera _camera;
-  
 
 
-   
+
+
     void Start()
     {
 
@@ -43,14 +44,15 @@ public class PlayerController : NetworkBehaviour
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
         raycastDistance = (playerHeight / 2) + 0.2f;
 
-        // Hides the mouse
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
   
     }
 
     void Update()
     {
 
-       
+
         moveHorizontal = Input.GetAxisRaw("Horizontal");
         moveForward = Input.GetAxisRaw("Vertical");
 
@@ -70,6 +72,12 @@ public class PlayerController : NetworkBehaviour
         else
         {
             groundCheckTimer -= Time.deltaTime;
+        }
+        
+        //Tirar comida
+          if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
         }
 
     }
@@ -119,15 +127,17 @@ public class PlayerController : NetworkBehaviour
 
     void ApplyJumpPhysics()
     {
-        if (rb.linearVelocity.y < 0) 
+        if (rb.linearVelocity.y < 0)
         {
             // Falling: Apply fall multiplier to make descent faster
             rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.fixedDeltaTime;
         } // Rising
         else if (rb.linearVelocity.y > 0)
         {
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
             // Rising: Change multiplier to make player reach peak of jump faster
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * ascendMultiplier  * Time.fixedDeltaTime;
         }
-    }
-}
+ }
+ }
+
+
