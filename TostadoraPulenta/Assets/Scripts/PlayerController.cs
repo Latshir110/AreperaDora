@@ -1,16 +1,21 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
-
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
       // Camera Rotation
     public float mouseSensitivity = 2f;
     private float verticalRotation = 0f;
-    private Transform cameraTransform;
-        public GameObject projectilePrefab;
+
+    //camara
+    //public Transform cameraTransform;
+
+    //proyectil
+    public GameObject projectilePrefab;
     
     // Ground Movement
     private Rigidbody rb;
@@ -35,6 +40,17 @@ public class PlayerController : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip jumpSound;
 
+    //Controlls
+    private CharacterController controller;
+    private Vector2 movementInput = Vector2.zero;
+    private bool jumped = false;
+    private bool attacked = false;
+
+    //movimiento de camara
+    private Vector2 lookInput;
+
+
+
 
 
     void Start()
@@ -42,7 +58,9 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        cameraTransform = Camera.main.transform;
+        //cameraTransform = Camera.main.transform;
+
+        controller = gameObject.GetComponent<CharacterController>();
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
@@ -53,16 +71,35 @@ public class PlayerController : MonoBehaviour
   
     }
 
+    public void OnMove(InputAction.CallbackContext context) { 
+        movementInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        jumped = context.action.triggered;
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        Dispara();
+    }
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        lookInput = context.ReadValue<Vector2>();
+    }
+
     void Update()
     {
 
 
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveForward = Input.GetAxisRaw("Vertical");
+        moveHorizontal = movementInput.x;
+        moveForward = movementInput.y;
 
         RotateCamera();
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (jumped && isGrounded)
         {
             Jump();
         }
@@ -76,16 +113,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             groundCheckTimer -= Time.deltaTime;
-        }
-        
-        //Tirar comida
-          if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
-
-            //Efecto de sonido
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
-            audioSource.PlayOneShot(shootSound);
         }
 
     }
@@ -117,13 +144,14 @@ public class PlayerController : MonoBehaviour
 
     void RotateCamera()
     {
-        float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
-        transform.Rotate(0, horizontalRotation, 0);
+        float yaw = lookInput.x * mouseSensitivity;
+        float pitch = lookInput.y * mouseSensitivity;
 
-        verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+        transform.Rotate(0f, yaw, 0f);
+
+        verticalRotation -= pitch;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        //cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
     void Jump()
@@ -135,6 +163,20 @@ public class PlayerController : MonoBehaviour
         //Jump SFX
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(jumpSound);
+    }
+
+    void Dispara()
+    {
+
+        //Tirar comida
+       
+            Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+
+            //Efecto de sonido
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(shootSound);
+  
+
     }
 
     void ApplyJumpPhysics()
