@@ -49,11 +49,15 @@ public class PlayerController : MonoBehaviour
     //movimiento de camara
     private Vector2 lookInput;
 
+	//Sistema de vida
+	public int health = 10;
+
+	PlayerInputManager pim = PlayerInputManager.instance;
 
 
 
 
-    void Start()
+	void Start()
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
@@ -93,8 +97,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-
-        moveHorizontal = movementInput.x;
+		Dead();
+		moveHorizontal = movementInput.x;
         moveForward = movementInput.y;
 
         RotateCamera();
@@ -192,6 +196,29 @@ public class PlayerController : MonoBehaviour
             // Rising: Change multiplier to make player reach peak of jump faster
         }
  }
- }
+    
+	void Dead()
+	{
+		if (health <= 0)
+		{
+			DeSpawn();  
+			Invoke("Spawn", 10);
+		}
+
+	}
+	void DeSpawn()
+	{
+		gameObject.SetActive(false);
+		pim?.DisableJoining();
+	}
+	void Spawn()
+	{
+		health = 10;
+		gameObject.SetActive(true);
+		pim?.EnableJoining();
+		Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+	}
+    
+}
 
 

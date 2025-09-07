@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 9087802075964607939}
   - component: {fileID: 7077722501634416181}
   - component: {fileID: 2664266340669878999}
+  - component: {fileID: 5722083572706843352}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -228,7 +229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   mouseSensitivity: 0.5
-  cameraTransform: {fileID: 0}
   projectilePrefab: {fileID: 634979365082962996, guid: cee1404bafb051f4c82ce1096f5bc73a, type: 3}
   MoveSpeed: 5
   jumpForce: 10
@@ -239,6 +239,7 @@ MonoBehaviour:
     m_Bits: 8
   shootSound: {fileID: 8300000, guid: 23273ea3ab42d5d428e3acbd77787d64, type: 3}
   jumpSound: {fileID: 8300000, guid: 2151bfbe7fa5d3c4594ff61ed0941074, type: 3}
+  health: 10
 --- !u!54 &9087802075964607939
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -385,3 +386,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5722083572706843352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725137119751583065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e0d829b174b4c4f8e09038a79f0eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DesactivarJugador
+  playerInput: {fileID: 7077722501634416181}
+  rb: {fileID: 9087802075964607939}
+  playerCamera: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  visualsToToggle: []
+  collidersToToggle: []
+  scriptsToDisable: []
+  maxHealth: 10
+  health: 10
+  respawnDelay: 5
